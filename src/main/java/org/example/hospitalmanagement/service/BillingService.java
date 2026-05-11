@@ -6,6 +6,7 @@ import org.example.hospitalmanagement.Entity.Enums.PaymentMethod;
 import org.example.hospitalmanagement.Entity.Enums.PaymentStatus;
 import org.example.hospitalmanagement.dto.request.BillingRequestDto;
 import org.example.hospitalmanagement.dto.response.BillingResponseDto;
+import org.example.hospitalmanagement.exception.ResourceNotFoundException;
 import org.example.hospitalmanagement.repository.BillingRepository;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +54,7 @@ public class BillingService {
         Optional<Billing> billingOptional=billingRepository.findById(id);
         //check if billing exist
         if(!billingOptional.isPresent()){
-            throw new RuntimeException("Billing not found with Id: "+id);
+            throw new ResourceNotFoundException("Billing not found with Id: "+id);
         }
         Billing billing=billingOptional.get();
         //convert to responsedto and return
@@ -66,7 +67,7 @@ public class BillingService {
         Optional<Billing> billingOptional=billingRepository.findByAppointmentId(appointmentId);
         //check if billing exist
         if(!billingOptional.isPresent()){
-            throw new RuntimeException("Billing not found with Appointment Id: "+appointmentId);
+            throw new ResourceNotFoundException("Billing not found with Appointment Id: "+appointmentId);
         }
         Billing billing=billingOptional.get();
         //convert to responsedto and return
@@ -79,7 +80,7 @@ public class BillingService {
         Optional<Billing> billingOptional=billingRepository.findById(id);
         //check if billing exist
         if(!billingOptional.isPresent()){
-            throw new RuntimeException("Billing not found with Appointment Id: "+id);
+            throw new ResourceNotFoundException("Billing not found with Appointment Id: "+id);
         }
         Billing billing=billingOptional.get();
         //update payment details
@@ -98,7 +99,7 @@ public class BillingService {
         Optional<Billing> billingOptional=billingRepository.findById(id);
         //check if billing exist
         if(!billingOptional.isPresent()){
-            throw new RuntimeException("Billing not found with Appointment Id: "+id);
+            throw new ResourceNotFoundException("Billing not found with Appointment Id: "+id);
         }
         Billing billing=billingOptional.get();
         //update payment details

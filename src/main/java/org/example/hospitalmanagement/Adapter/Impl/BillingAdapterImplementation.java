@@ -5,6 +5,7 @@ import org.example.hospitalmanagement.Entity.Appointment;
 import org.example.hospitalmanagement.Entity.Billing;
 import org.example.hospitalmanagement.dto.request.BillingRequestDto;
 import org.example.hospitalmanagement.dto.response.BillingResponseDto;
+import org.example.hospitalmanagement.exception.ResourceNotFoundException;
 import org.example.hospitalmanagement.repository.AppointmentRepository;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,7 @@ public class BillingAdapterImplementation implements BillingAdapter {
     public Billing toEntity(BillingRequestDto billingRequestDto) {
 
         Appointment appointment= appointmentRepository.findById(billingRequestDto.getAppointmentId())
-                .orElseThrow(()->new RuntimeException("Appointment not found by id"+billingRequestDto.getAppointmentId()));
+                .orElseThrow(()->new ResourceNotFoundException("Appointment not found by id"+billingRequestDto.getAppointmentId()));
 
         //Calculate Total Amount
         Double constultationFees=billingRequestDto.getConsultationFees();

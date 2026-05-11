@@ -6,6 +6,7 @@ import org.example.hospitalmanagement.Entity.Doctor;
 import org.example.hospitalmanagement.Entity.Patient;
 import org.example.hospitalmanagement.dto.request.AppointmentRequestDto;
 import org.example.hospitalmanagement.dto.response.AppointmentResponseDto;
+import org.example.hospitalmanagement.exception.ResourceNotFoundException;
 import org.example.hospitalmanagement.repository.DoctorRepository;
 import org.example.hospitalmanagement.repository.PatientRepository;
 import org.springframework.stereotype.Component;
@@ -25,10 +26,10 @@ public class AppointmentAdapterImpl implements AppointmentAdapter {
     @Override
     public Appointment toEntity(AppointmentRequestDto appointmentRequestDto) {
         Patient patient= patientRepository.findById(appointmentRequestDto.getPatientId())
-                .orElseThrow(() ->  new RuntimeException("Patient not found with id "+appointmentRequestDto.getPatientId()));
+                .orElseThrow(() ->  new ResourceNotFoundException("Patient not found with id "+appointmentRequestDto.getPatientId()));
 
         Doctor doctor=doctorRepository.findById(appointmentRequestDto.getDoctorId())
-                .orElseThrow(()-> new RuntimeException("Doctor not found with id "+appointmentRequestDto.getDoctorId()));
+                .orElseThrow(()-> new ResourceNotFoundException("Doctor not found with id "+appointmentRequestDto.getDoctorId()));
 
         return Appointment.builder()
                 .patient(patient)

@@ -5,6 +5,8 @@ import org.example.hospitalmanagement.Entity.Enums.Status;
 import org.example.hospitalmanagement.Entity.Patient;
 import org.example.hospitalmanagement.dto.request.PatientRequestDto;
 import org.example.hospitalmanagement.dto.response.PatientResponseDto;
+import org.example.hospitalmanagement.exception.DuplicateResourceException;
+import org.example.hospitalmanagement.exception.ResourceNotFoundException;
 import org.example.hospitalmanagement.repository.PatientRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,11 @@ public class PatientService {
 
     //Create Patient
     public PatientResponseDto createPatient(PatientRequestDto patientRequestDto){
+        //Check Duplicate email
+        if(patientRepository.existsByEmail(patientRequestDto.getEmail()))
+        {
+            throw new DuplicateResourceException("Patient already exists with email:"+patientRequestDto.getEmail());
+        }
         //convert dto to entity
         Patient patient= patientAdapter.toEntity(patientRequestDto);
         //save to DB
@@ -53,7 +60,7 @@ public class PatientService {
         Optional<Patient> patientOptional=patientRepository.findById(id);
         //check if patient exist
         if(!patientOptional.isPresent()){
-            throw new RuntimeException("Patient not found with id: "+id);
+            throw new ResourceNotFoundException("Patient not found with id: "+id);
         }
         Patient patient=patientOptional.get();
         //convert to responseDto and return
@@ -64,7 +71,7 @@ public class PatientService {
     public PatientResponseDto updatePatient(Long id, PatientRequestDto patientRequestDto) {
         Optional<Patient> patientOptional = patientRepository.findById(id);
         if (!patientOptional.isPresent()) {
-            throw new RuntimeException("Patient not found with id: " + id);
+            throw new ResourceNotFoundException("Patient not found with id: " + id);
         }
         Patient existingPatient = patientOptional.get();
         //update fields
@@ -111,7 +118,7 @@ public class PatientService {
         //check if patient exist
         Optional<Patient> patientOptional = patientRepository.findById(id);
         if (!patientOptional.isPresent()) {
-            throw new RuntimeException("Patient not found with id: " + id);
+            throw new ResourceNotFoundException("Patient not found with id: " + id);
         }
         Patient patient = patientOptional.get();
         //set status to inactive
@@ -127,7 +134,7 @@ public class PatientService {
         //check if patient exist
         Optional<Patient> patientOptional = patientRepository.findById(id);
         if (!patientOptional.isPresent()) {
-            throw new RuntimeException("Patient not found with id: " + id);
+            throw new ResourceNotFoundException("Patient not found with id: " + id);
         }
         Patient patient = patientOptional.get();
         //set status to inactive

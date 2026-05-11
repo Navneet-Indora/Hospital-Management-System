@@ -5,6 +5,7 @@ import org.example.hospitalmanagement.Entity.Appointment;
 import org.example.hospitalmanagement.Entity.Enums.AppointmentStatus;
 import org.example.hospitalmanagement.dto.request.AppointmentRequestDto;
 import org.example.hospitalmanagement.dto.response.AppointmentResponseDto;
+import org.example.hospitalmanagement.exception.ResourceNotFoundException;
 import org.example.hospitalmanagement.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +53,7 @@ public class AppointmentService {
         Optional<Appointment> appointmentOptional= appointmentRepository.findById(id);
         //Check if Appointment Exists
         if(!appointmentOptional.isPresent()){
-            throw new RuntimeException("Appointment not found with id :"+id);
+            throw new ResourceNotFoundException("Appointment not found with id :"+id);
         }
         Appointment appointment=appointmentOptional.get();
         //convert to ResponseDto and Return
@@ -94,7 +95,7 @@ public class AppointmentService {
         Optional<Appointment> appointmentOptional= appointmentRepository.findById(id);
         //Check if Appointment Exists
         if(!appointmentOptional.isPresent()){
-            throw new RuntimeException("Appointment not found with id :"+id);
+            throw new ResourceNotFoundException("Appointment not found with id :"+id);
         }
         Appointment existingAppointment=appointmentOptional.get();
         //save old date and time before updating
@@ -121,7 +122,7 @@ public class AppointmentService {
         Optional<Appointment> appointmentOptional= appointmentRepository.findById(id);
         //Check if Appointment Exists
         if(!appointmentOptional.isPresent()){
-            throw new RuntimeException("Appointment not found with id :"+id);
+            throw new ResourceNotFoundException("Appointment not found with id :"+id);
         }
         Appointment appointment=appointmentOptional.get();
         //set status to CANCELLED
@@ -138,7 +139,7 @@ public class AppointmentService {
         Optional<Appointment> appointmentOptional= appointmentRepository.findById(id);
         //Check if Appointment Exists
         if(!appointmentOptional.isPresent()){
-            throw new RuntimeException("Appointment not found with id :"+id);
+            throw new ResourceNotFoundException("Appointment not found with id :"+id);
         }
         Appointment appointment=appointmentOptional.get();
         //set status to Completed

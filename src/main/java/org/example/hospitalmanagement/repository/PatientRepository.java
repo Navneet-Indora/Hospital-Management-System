@@ -11,4 +11,6 @@ import java.util.List;
 public interface PatientRepository extends JpaRepository<Patient,Long> {
     List<Patient> findByStatus(Status status);
 
+
+    boolean existsByEmail(String email);
 }

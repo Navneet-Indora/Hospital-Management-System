@@ -1,5 +1,7 @@
 package org.example.hospitalmanagement.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.example.hospitalmanagement.Entity.Enums.PaymentMethod;
 import org.example.hospitalmanagement.dto.request.BillingRequestDto;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag(name = "Billing Management",
+        description = "APIs for managing billing and payments")
 @RequestMapping("/api/v1/billing")
 public class BillingController {
     private final BillingService billingService;
@@ -22,6 +26,7 @@ public class BillingController {
 
     //create a Billing
     //Post/api/v1/billing
+    @Operation(summary = "Create new billing",description = "Create a new billing")
     @PostMapping
     public ResponseEntity<BillingResponseDto> createBilling(@Valid @RequestBody BillingRequestDto billingRequestDto){
         BillingResponseDto response= billingService.createBilling(billingRequestDto);
@@ -29,6 +34,7 @@ public class BillingController {
     }
 
     //Get All Billings
+    @Operation(summary = "Get all billings",description = "Returns a list of billings")
     @GetMapping
     public ResponseEntity<List<BillingResponseDto>> getAllBillings(){
         List<BillingResponseDto> response=billingService.getAllBilling();
@@ -36,6 +42,7 @@ public class BillingController {
     }
 
     //Get Billing By id
+    @Operation(summary = "Get billing by ID",description = "Returns billing by their ID")
     @GetMapping("/{id}")
     public ResponseEntity<BillingResponseDto> getBillingById(@PathVariable Long id){
         BillingResponseDto response=billingService.getBillingById(id);
@@ -43,6 +50,7 @@ public class BillingController {
     }
 
     //Get Billing by appointment id
+    @Operation(summary = "Get billing by appointment",description = "Returns billing by appointment ID")
     @GetMapping("/appointment/{appointmentId}")
     public ResponseEntity<BillingResponseDto> getBillingByAppointment(@PathVariable Long appointmentId){
         BillingResponseDto response=billingService.getBillingByAppointment(appointmentId);
@@ -50,6 +58,7 @@ public class BillingController {
     }
 
     //Mark as Paid
+    @Operation(summary = "Mark billing as paid",description = "Marks billing as paid")
     @PutMapping("/{id}/pay")
     public ResponseEntity<BillingResponseDto> markAsPaid(@PathVariable Long id, @RequestParam PaymentMethod paymentMethod){
         BillingResponseDto response=billingService.markAsPaid(id,paymentMethod);
@@ -57,6 +66,7 @@ public class BillingController {
     }
 
     //Mark as Pending
+    @Operation(summary = "Mark billing as Pending",description = "Marks billing as Pending")
     @PutMapping("/{id}/pending")
     public ResponseEntity<BillingResponseDto> markAsPending(@PathVariable Long id,@RequestParam PaymentMethod paymentMethod){
         BillingResponseDto response=billingService.markAsPending(id,paymentMethod);
@@ -64,6 +74,7 @@ public class BillingController {
     }
 
     //Get All unpaid Billings
+    @Operation(summary = "Get all unpaid billings",description = "returns a list of unpaid billings")
     @GetMapping("/unpaid")
     public ResponseEntity<List<BillingResponseDto>> getUnpaidBillings(){
         List<BillingResponseDto> response=billingService.getUnpaidBilling();
@@ -71,6 +82,7 @@ public class BillingController {
     }
 
     //Get All paid Billings
+    @Operation(summary = "Get all paid billings",description = "returns a list of paid billings")
     @GetMapping("/paid")
     public ResponseEntity<List<BillingResponseDto>> getPaidBillings(){
         List<BillingResponseDto> response=billingService.getPaidBillings();

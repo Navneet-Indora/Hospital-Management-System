@@ -1,5 +1,6 @@
 package org.example.hospitalmanagement.controller;
 
+import jakarta.validation.Valid;
 import org.example.hospitalmanagement.Entity.Enums.PaymentMethod;
 import org.example.hospitalmanagement.dto.request.BillingRequestDto;
 import org.example.hospitalmanagement.dto.response.BillingResponseDto;
@@ -22,7 +23,7 @@ public class BillingController {
     //create a Billing
     //Post/api/v1/billing
     @PostMapping
-    public ResponseEntity<BillingResponseDto> createBilling(@RequestBody BillingRequestDto billingRequestDto){
+    public ResponseEntity<BillingResponseDto> createBilling(@Valid @RequestBody BillingRequestDto billingRequestDto){
         BillingResponseDto response= billingService.createBilling(billingRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

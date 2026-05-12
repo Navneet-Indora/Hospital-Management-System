@@ -73,7 +73,7 @@ public class DoctorService {
             throw new ResourceNotFoundException("Doctor not found with id: " + id);
         }
         Doctor existingDoctor = doctorOptional.get();
-        //only update fields that cliect sent(not null)
+        //only update fields that client sent(not null)
         if (doctorRequestDto.getName() != null) {
             existingDoctor.setName(doctorRequestDto.getName());
         }

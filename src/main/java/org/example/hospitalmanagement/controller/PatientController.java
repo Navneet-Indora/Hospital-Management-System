@@ -1,5 +1,6 @@
 package org.example.hospitalmanagement.controller;
 
+import jakarta.validation.Valid;
 import org.example.hospitalmanagement.dto.request.PatientRequestDto;
 import org.example.hospitalmanagement.dto.response.PatientResponseDto;
 import org.example.hospitalmanagement.service.PatientService;
@@ -21,7 +22,7 @@ public class PatientController {
     //Create Patient
     //Post/api/v1/patietns
     @PostMapping
-    public ResponseEntity<PatientResponseDto> createPatient(@RequestBody PatientRequestDto patientRequestDto) {
+    public ResponseEntity<PatientResponseDto> createPatient(@Valid @RequestBody PatientRequestDto patientRequestDto) {
         PatientResponseDto response = patientService.createPatient(patientRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -44,7 +45,7 @@ public class PatientController {
     //update Patient
     //Patch/api/v1/patients/1
     @PatchMapping("/{id}")
-    public ResponseEntity<PatientResponseDto> udpatePatient(@PathVariable Long id,@RequestBody PatientRequestDto patientRequestDto){
+    public ResponseEntity<PatientResponseDto> udpatePatient(@PathVariable Long id,@Valid @RequestBody PatientRequestDto patientRequestDto){
         PatientResponseDto response=patientService.updatePatient(id,patientRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

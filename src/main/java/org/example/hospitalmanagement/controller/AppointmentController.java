@@ -1,5 +1,6 @@
 package org.example.hospitalmanagement.controller;
 
+import jakarta.validation.Valid;
 import org.example.hospitalmanagement.dto.request.AppointmentRequestDto;
 import org.example.hospitalmanagement.dto.response.AppointmentResponseDto;
 import org.example.hospitalmanagement.service.AppointmentService;
@@ -21,7 +22,7 @@ public class AppointmentController {
 
     //Create Appointment
     @PostMapping
-    public ResponseEntity<AppointmentResponseDto> createAppointment(@RequestBody AppointmentRequestDto appointmentRequestDto) {
+    public ResponseEntity<AppointmentResponseDto> createAppointment(@Valid @RequestBody AppointmentRequestDto appointmentRequestDto) {
         AppointmentResponseDto response = appointmentService.createAppointment(appointmentRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

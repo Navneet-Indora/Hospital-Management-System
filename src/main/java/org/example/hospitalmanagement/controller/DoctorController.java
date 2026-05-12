@@ -1,5 +1,6 @@
 package org.example.hospitalmanagement.controller;
 
+import jakarta.validation.Valid;
 import org.example.hospitalmanagement.dto.request.DoctorRequestDto;
 import org.example.hospitalmanagement.dto.response.DoctorResponseDto;
 import org.example.hospitalmanagement.service.DoctorService;
@@ -20,9 +21,9 @@ public class DoctorController {
     //Create Doctor
     //Post/api/v1/doctors
     @PostMapping
-    public ResponseEntity<DoctorResponseDto> createDoctor(@RequestBody DoctorRequestDto doctorRequestDto){
+    public ResponseEntity<DoctorResponseDto> createDoctor(@Valid @RequestBody DoctorRequestDto doctorRequestDto){
         DoctorResponseDto response=doctorService.createDoctor(doctorRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     //Get All Active Doctor
@@ -44,7 +45,7 @@ public class DoctorController {
     //Update Doctor (Partial update)
     //Patch/api/v1/doctors/1
     @PatchMapping("/{id}")
-    public ResponseEntity<DoctorResponseDto> updateDoctor(@PathVariable Long id,@RequestBody DoctorRequestDto doctorRequestDto){
+    public ResponseEntity<DoctorResponseDto> updateDoctor(@PathVariable Long id,@Valid @RequestBody DoctorRequestDto doctorRequestDto){
         DoctorResponseDto response=doctorService.updateDoctor(id,doctorRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

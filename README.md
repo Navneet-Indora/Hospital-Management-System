@@ -5,7 +5,8 @@ Spring Boot REST API for managing hospital operations including patients, doctor
 ## About The Project
 
 A comprehensive Hospital Management System that handles Patient profiles, Doctor profiles, Appointment scheduling, 
-and Billing & Payment management with proper validation, exception handling, and API documentation.
+and Billing & Payment management with proper validation, exception handling, and API documentation and 
+JWT based security with Role Based Access Control.
 
 
 ## Features
@@ -16,6 +17,8 @@ and Billing & Payment management with proper validation, exception handling, and
 - Global Exception Handling
 - Validation
 - Interactive Swagger UI documentation
+- JWT Security
+- Role Based Access
 
 ## Tech Stack
 - Java 21
@@ -24,6 +27,8 @@ and Billing & Payment management with proper validation, exception handling, and
 - JPA/Hibernate
 - Lombok
 - Swagger UI
+- Spring Security
+- Token Based Security (JWT)
 
 ## Architecture
 - REST API
@@ -79,6 +84,20 @@ and Billing & Payment management with proper validation, exception handling, and
 | GET    | /api/billing/unpaid           | Get unpaid billings |
 | GET    | /api/billing/paid             | Get paid billings   |
 
+## Security
+
+### Authentication Flow
+
+1.Register → POST /api/auth/register
+2.Login    → POST /api/auth/login → Returns JWT Token
+3.Use Token → Authorization: Bearer <token>
+
+### Role Based Access Control
+| Role    | Access                         |
+|---------|--------------------------------|
+| ADMIN   | Full access to everything      |
+| DOCTOR  | Own profile, own appointments  |
+| PATIENT | Own profile, book appointments |
 ## How to Run
 
 1. Clone the repository
@@ -89,8 +108,7 @@ and Billing & Payment management with proper validation, exception handling, and
 http://localhost:8080/swagger-ui/index.html
 
 ## Future Enhancements
-- JWT Authentication
-- Role-based Access Control
+
 - Email Notifications
 - Search & Filter
 - Pagination

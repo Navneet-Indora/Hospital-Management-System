@@ -14,7 +14,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    //Handle Resource not foung exception
+    //Handle Resource not found exception
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex){
         ErrorResponse errorResponse=ErrorResponse.builder()
@@ -28,6 +28,19 @@ public class GlobalExceptionHandler {
                 .body(errorResponse);
     }
 
+    //Handle Appointment Clash Exception
+    @ExceptionHandler(AppointmentClashException.class)
+    public ResponseEntity<ErrorResponse> handleAppointmentClashException(AppointmentClashException ex){
+        ErrorResponse errorResponse=ErrorResponse.builder()
+                .status(HttpStatus.CONTINUE.value()) //409
+                .message(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(errorResponse);
+    }
     //Handle DuplicateResourceException-409
     @ExceptionHandler(DuplicateResourceException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateResourcseException(DuplicateResourceException ex){
